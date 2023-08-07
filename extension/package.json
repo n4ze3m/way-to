@@ -1,8 +1,8 @@
 {
-  "name": "extension",
-  "displayName": "Extension",
+  "name": "way-to-website",
+  "displayName": "Way to Website",
   "version": "0.0.1",
-  "description": "A basic Plasmo extension.",
+  "description": "Don't Forget the Website Anymore",
   "author": "n4ze3m",
   "scripts": {
     "dev": "plasmo dev",
@@ -25,7 +25,27 @@
   },
   "manifest": {
     "host_permissions": [
-      "https://*/*"
-    ]
+      "https://*/*",
+      "*://to/*",
+      "*://*.wayto.website/*"
+    ],
+    "declarative_net_request": {
+      "rule_resources": [
+        {
+          "enabled": true,
+          "id": "redirect",
+          "path": "~redirect.json"
+        }
+      ]
+    },
+    "permissions": [
+      "declarativeNetRequestWithHostAccess",
+      "activeTab",
+      "cookies",
+      "storage"
+    ],
+    "omnibox": {
+      "keyword": "to"
+   }
   }
 }
