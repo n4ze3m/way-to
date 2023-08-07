@@ -2,16 +2,52 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "sqlite"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model User {
+  id                  String           @id
+  email               String?
+  access_token        String?
+  created_at          DateTime?        @default(now()) @db.Timestamptz(6)
+  personal_collection Collection[]
+  collections         CollectionUser[]
+  created_url         CollectionUrl[]
+}
+
+model Collection {
+  id            String           @id @default(cuid())
+  name          String
+  description   String?
+  path          String?          @default("/")
+  admin_user_id String
+  User          User             @relation(fields: [admin_user_id], references: [id])
+  url           CollectionUrl[]
+  users         CollectionUser[]
+  created_at    DateTime?        @default(now()) @db.Timestamptz(6)
+}
+
+model CollectionUser {
+  id            String     @id @default(cuid())
+  collection_id String
+  user_id       String
+  Collection    Collection @relation(fields: [collection_id], references: [id])
+  User          User       @relation(fields: [user_id], references: [id])
+  created_at    DateTime?  @default(now()) @db.Timestamptz(6)
+}
+
+model CollectionUrl {
+  id            String     @id @default(cuid())
+  collection_id String
+  to_path       String
+  url           String
+  user_id       String
+  User          User       @relation(fields: [user_id], references: [id])
+  Collection    Collection @relation(fields: [collection_id], references: [id])
+  created_at    DateTime?  @default(now()) @db.Timestamptz(6)
 }
