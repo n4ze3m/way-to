@@ -5,28 +5,19 @@ import {
   CogIcon,
   HomeIcon,
   XMarkIcon,
+  UserGroupIcon,
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-const navigation = [
-  { name: "Home", href: "/dashboard", icon: HomeIcon, current: true },
-  {
-    name: "Settings",
-    href: "/dashboard/settings",
-    icon: CogIcon,
-    current: false,
-  },
-];
-
 //@ts-ignore
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function DashboardLayout({
+export default function DashboardCollectionLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -35,6 +26,31 @@ export default function DashboardLayout({
   const user = useUser();
   const router = useRouter();
   const supabase = useSupabaseClient();
+
+  const { slug } = router.query as {
+    slug?: string;
+  };
+
+  const navigation = [
+    {
+      name: "Links",
+      href: `/dashboard/collection/${slug}`,
+      icon: HomeIcon,
+      current: true,
+    },
+    {
+      name: "Members",
+      href: `/dashboard/collection/${slug}/members`,
+      icon: UserGroupIcon,
+      current: false,
+    },
+    {
+      name: "Settings",
+      href: `/dashboard/collection/${slug}/settings`,
+      icon: CogIcon,
+      current: false,
+    },
+  ];
 
   return (
     <>
@@ -111,18 +127,18 @@ export default function DashboardLayout({
                           key={item.name}
                           href={item.href}
                           className={classNames(
-                            router.pathname === item.href
+                            router.asPath === item.href
                               ? "bg-gray-100 text-gray-900"
                               : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
                             "group flex items-center rounded-md px-2 py-2 text-sm font-medium"
                           )}
                           aria-current={
-                            router.pathname === item.href ? "page" : undefined
+                            router.asPath === item.href ? "page" : undefined
                           }
                         >
                           <item.icon
                             className={classNames(
-                              router.pathname === item.href
+                              router.asPath === item.href
                                 ? "text-gray-500"
                                 : "text-gray-400 group-hover:text-gray-500",
                               "mr-3 h-6 w-6 flex-shrink-0"
@@ -158,18 +174,18 @@ export default function DashboardLayout({
                     key={item.name}
                     href={item.href}
                     className={classNames(
-                      router.pathname === item.href
+                      router.asPath === item.href
                         ? "bg-gray-100 text-gray-900"
                         : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
                       "group flex items-center rounded-md px-2 py-2 text-sm font-medium"
                     )}
                     aria-current={
-                      router.pathname === item.href ? "page" : undefined
+                      router.asPath === item.href ? "page" : undefined
                     }
                   >
                     <item.icon
                       className={classNames(
-                        router.pathname === item.href
+                        router.asPath === item.href
                           ? "text-gray-500"
                           : "text-gray-400 group-hover:text-gray-500",
                         "mr-3 h-6 w-6 flex-shrink-0"
@@ -207,7 +223,7 @@ export default function DashboardLayout({
                         alt=""
                       />
                       <span className="ml-3 hidden text-sm font-medium text-gray-700 lg:block">
-                        <span className="sr-only">Open user menu for </span>
+                        <span className="sr-only">Open user menu for</span>
                         {user?.email}
                       </span>
                       <ChevronDownIcon

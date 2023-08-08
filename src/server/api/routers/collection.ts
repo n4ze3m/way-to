@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { getUserCollection } from "~/server/lib/collection";
 
 export const collectionRouter = createTRPCRouter({
   createCollection: publicProcedure.input(z.object({
@@ -67,5 +68,32 @@ export const collectionRouter = createTRPCRouter({
     ];
 
     return collections;
+  }),
+
+  getCollectionById: publicProcedure.input(z.object({
+    id: z.string(),
+  })).query(async ({ ctx, input }) => {
+    const user = ctx.user;
+    const prisma = ctx.prisma;
+
+    if (!user) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+      });
+    }
+
+    const collection = await getUserCollection(
+      prisma,
+      user.id,
+      input.id,
+    );
+
+    if (!collection) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+      });
+    }
+
+    return collection;
   }),
 });
