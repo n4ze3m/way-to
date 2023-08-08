@@ -5,7 +5,7 @@
     "action" : {
       "type" : "redirect",
       "redirect": {
-        "regexSubstitution": "http://localhost:3000/\\1"
+        "regexSubstitution": "http://localhost:3000/r/\\1"
       }
     },
     "condition" : {

@@ -1,27 +1,27 @@
 import { useState } from "react"
 
+import "./tailwind.css"
+import { useCookie } from "~hooks/useCookie"
+
 function IndexPopup() {
   const [data, setData] = useState("")
+
+  const {
+    cookie,
+    setCookie
+  } = useCookie()
 
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "column",
-        padding: 16
+        // width and height 500
+        width: 500,
+        height: 500
       }}>
-      <h2>
-        Welcome to your
-        <a href="https://www.plasmo.com" target="_blank">
-          {" "}
-          Plasmo
-        </a>{" "}
-        Extension!
-      </h2>
-      <input onChange={(e) => setData(e.target.value)} value={data} />
-      <a href="https://docs.plasmo.com" target="_blank">
-        View Docs
-      </a>
+      {/* text bold */}
+      <div className="text-2xl font-bold">Hello World</div>
+      {/* text */}
+      {cookie}
     </div>
   )
 }
