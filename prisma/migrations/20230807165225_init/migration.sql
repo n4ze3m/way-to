@@ -73,3 +73,26 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
+
+
+CREATE OR REPLACE FUNCTION get_users_collection_ids(access_token_param TEXT) 
+RETURNS text[] AS $$
+DECLARE 
+   id_list text[];
+BEGIN
+  SELECT ARRAY(
+    SELECT DISTINCT id FROM (
+      SELECT c.id FROM public."User" u 
+      LEFT JOIN public."Collection" c ON u.id = c.admin_user_id 
+      WHERE u.access_token = access_token_param
+      UNION ALL
+      SELECT pc.collection_id AS id
+      FROM public."User" u
+      LEFT JOIN public."CollectionUser" pc ON u.id = pc.user_id
+      WHERE u.access_token = access_token_param
+    ) AS combined_query
+  ) :: text[] INTO id_list;
+  
+  RETURN id_list;
+END;
+$$ LANGUAGE plpgsql;

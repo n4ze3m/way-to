@@ -60,3 +60,29 @@ export const getUserCollection = async (
 
   return null;
 };
+
+export const getUserAllCollections = async (
+  prisma: PrismaClient,
+  access_token: string,
+) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      access_token: access_token,
+    },
+    include: {
+      collections: true,
+      personal_collection: true,
+    },
+  });
+
+  if (!user) {
+    return null;
+  }
+
+  const ids = [
+    ...user.collections.map((collection) => collection.collection_id),
+    ...user.personal_collection.map((collection) => collection.id),
+  ];
+
+  return ids;
+};
