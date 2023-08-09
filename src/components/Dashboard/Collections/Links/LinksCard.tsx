@@ -2,7 +2,14 @@ import React from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
-
+import { Fragment, useState } from "react";
+import {
+  EllipsisHorizontalIcon,
+  TrashIcon,
+  PencilSquareIcon,
+} from "@heroicons/react/24/outline";
+import { Dropdown, Form, Modal } from "antd";
+import { UrlInput } from "extension/components/UrlInput";
 type Props = {
   id: string;
   collection_id: string;
@@ -14,6 +21,9 @@ type Props = {
     id: string;
     email: string | null;
   };
+
+  onEditClick: () => void;
+  onDeleteClick: () => void;
 };
 
 export const LinksCard = (props: Props) => {
@@ -25,9 +35,52 @@ export const LinksCard = (props: Props) => {
             <h3 className="flex-shrink truncate text-xl font-semibold text-gray-900 hover:text-gray-600">
               {`to/${props.to_path}`}
             </h3>
-            <p className="text-sm text-gray-500">
-              {dayjs(props.created_at).fromNow()}
-            </p>
+            <div className="flex items-center">
+              <p className="text-sm text-gray-500">
+                {dayjs(props.created_at).fromNow()}
+              </p>
+              <Dropdown
+                menu={{
+                  items: [
+                    {
+                      key: 1,
+                      label: (
+                        <button
+                          onClick={props.onEditClick}
+                          className="flex w-full items-center justify-between border-b border-gray-200 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                        >
+                          <PencilSquareIcon
+                            className="mr-3 h-5 w-5"
+                            aria-hidden="true"
+                          />
+                          Edit
+                        </button>
+                      ),
+                    },
+                    {
+                      key: 2,
+                      label: (
+                        <button
+                          onClick={props.onDeleteClick}
+                          className="flex w-full items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                        >
+                          <TrashIcon
+                            className="mr-3 h-5 w-5"
+                            aria-hidden="true"
+                          />
+                          Delete
+                        </button>
+                      ),
+                    },
+                  ],
+                }}
+              >
+                <EllipsisHorizontalIcon
+                  className="h-5 w-5 text-gray-400"
+                  aria-hidden="true"
+                />
+              </Dropdown>
+            </div>
           </div>
           <div className="w-full">
             <div className="flex items-end justify-between">
