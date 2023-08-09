@@ -1,7 +1,10 @@
 import React from "react"
 
+import { useCookieStore } from "~store"
+
 export const useCookie = () => {
-  const [cookie, setCookie] = React.useState(null)
+  const { cookie, setCookie } = useCookieStore()
+  
   React.useEffect(() => {
     chrome.cookies.get(
       {
@@ -24,8 +27,17 @@ export const useCookie = () => {
     setCookie(value)
   }
 
+  const removeCookie = () => {
+    chrome.cookies.remove({
+      url: process.env.PLASMO_PUBLIC_HOST,
+      name: "wtw:token"
+    })
+    setCookie(null)
+  }
+
   return {
     cookie,
-    setCookie: setCookieFunction
+    setCookie: setCookieFunction,
+    removeCookie
   }
 }

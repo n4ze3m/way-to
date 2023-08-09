@@ -21,10 +21,4 @@ chrome.omnibox.onInputChanged.addListener((text, suggest) => {
 
     // we need do a api call here
 
-    suggest([
-        {
-            content: "",
-            description:"",
-        }
-    ]);
 });

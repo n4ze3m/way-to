@@ -1,27 +1,29 @@
-import { useState } from "react"
+import "~components/tailwind.css"
 
-import "./tailwind.css"
-import { useCookie } from "~hooks/useCookie"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ConfigProvider } from "antd"
+
+import App from "~components/App"
+
+const queryClient = new QueryClient()
 
 function IndexPopup() {
-  const [data, setData] = useState("")
-
-  const {
-    cookie,
-    setCookie
-  } = useCookie()
-
   return (
     <div
       style={{
-        // width and height 500
-        width: 500,
-        height: 500
+        width: 600,
+        height: 600
       }}>
-      {/* text bold */}
-      <div className="text-2xl font-bold">Hello World</div>
-      {/* text */}
-      {cookie}
+      <QueryClientProvider client={queryClient}>
+        <ConfigProvider
+          theme={{
+            token: {
+              fontFamily: `Poppins !important;`
+            }
+          }}>
+          <App />
+        </ConfigProvider>
+      </QueryClientProvider>
     </div>
   )
 }
