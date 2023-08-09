@@ -2,7 +2,7 @@
   "name": "way-to-website",
   "displayName": "Way to Website",
   "version": "0.0.1",
-  "description": "Don't Forget the Website Anymore",
+  "description": "Short Links, Open Source Spirit",
   "author": "n4ze3m",
   "scripts": {
     "dev": "plasmo dev",
@@ -36,7 +36,6 @@
   "manifest": {
     "host_permissions": [
       "https://*/*",
-      "http://*/*",
       "*://to/*",
       "*://*.wayto.website/*"
     ],
@@ -52,8 +51,7 @@
     "permissions": [
       "declarativeNetRequestWithHostAccess",
       "activeTab",
-      "cookies",
-      "storage"
+      "cookies"
     ],
     "omnibox": {
       "keyword": "to"

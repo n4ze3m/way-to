@@ -5,20 +5,14 @@ chrome.omnibox.setDefaultSuggestion({
 });
 
 chrome.omnibox.onInputEntered.addListener((text) => {
-//   const url = `https://www.com/search?q=${text}`;
-//   chrome.tabs.create({ url });
-
+  const REDIRECT_URL = `http://to/${text}`;
+  chrome.tabs.create({ url: REDIRECT_URL });
 });
 
-
-// show suggestions
-
 chrome.omnibox.onInputChanged.addListener((text, suggest) => {
+  if (!text) {
+    return;
+  }
 
-    if (!text) {
-        return;
-    }
-
-    // we need do a api call here
-
+  // we need do add a search suggestion api
 });
