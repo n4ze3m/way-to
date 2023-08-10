@@ -2,15 +2,14 @@ import React from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
-import { Fragment, useState } from "react";
 import {
   EllipsisHorizontalIcon,
   TrashIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
-import { Dropdown, Form, Modal } from "antd";
-import { UrlInput } from "extension/components/UrlInput";
+import { Dropdown } from "antd";
 import Link from "next/link";
+
 type Props = {
   id: string;
   collection_id: string;

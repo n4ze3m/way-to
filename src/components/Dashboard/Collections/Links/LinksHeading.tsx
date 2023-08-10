@@ -36,7 +36,7 @@ export default function LinkHeading() {
     <>
       <div className="lg:flex lg:items-center lg:justify-between">
         <div className="min-w-0 flex-1">
-          <h2 className="mt-2 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+          <h2 className="text-xl font-semibold text-gray-900">
             Links
           </h2>
         </div>

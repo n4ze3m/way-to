@@ -4,9 +4,8 @@ import { LinkList } from "./LinksList";
 
 export const LinksBody = () => {
   return (
-    <div>
+    <div className="px-4 sm:px-6 lg:px-8">
       <LinkHeading />
-
       <LinkList />
     </div>
   );

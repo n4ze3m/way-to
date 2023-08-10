@@ -4,7 +4,7 @@ import BreadCrumbs from "~/components/Common/BreadCrumbs";
 import { Loading } from "~/components/Common/Loading";
 import { api } from "~/utils/api";
 import { LinksCard } from "./LinksCard";
-import { Form, Modal, notification } from "antd";
+import { Empty, Form, Modal, notification } from "antd";
 import { UrlInput } from "~/components/Common/UrlInput";
 
 export const LinkList = () => {
@@ -95,6 +95,15 @@ export const LinkList = () => {
               />
             ))}
           </div>
+          {
+            data.url.length === 0 && (
+              <div className="flex justify-center items-center h-96">
+                <Empty
+                  description="No Links Found"
+                  />
+              </div>
+            )
+          }
         </div>
       )}
 
