@@ -6,9 +6,7 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
-import {
-  createPagesServerClient,
-} from "@supabase/auth-helpers-nextjs";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { initTRPC } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import superjson from "superjson";
@@ -48,7 +46,9 @@ const createInnerTRPCContext = (_opts: CreateContextOptions) => {
  * @see https://trpc.io/docs/context
  */
 export const createTRPCContext = async (_opts: CreateNextContextOptions) => {
-  const supabase = createPagesServerClient(_opts);
+  const supabase = createPagesServerClient(_opts, {
+    supabaseKey: process.env.SUPABASE_SERVICE_KEY,
+  });
   const {
     data: { user },
   } = await supabase.auth.getUser();

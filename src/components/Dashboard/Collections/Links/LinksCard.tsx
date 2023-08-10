@@ -10,6 +10,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { Dropdown, Form, Modal } from "antd";
 import { UrlInput } from "extension/components/UrlInput";
+import Link from "next/link";
 type Props = {
   id: string;
   collection_id: string;
@@ -32,9 +33,12 @@ export const LinksCard = (props: Props) => {
       <div className="flex flex-1 items-center  justify-between truncate rounded-md border border-gray-200 bg-white pb-9">
         <div className="flex-1 space-y-2 truncate px-4 py-4">
           <div className="flex items-center justify-between">
-            <h3 className="flex-shrink truncate text-xl font-semibold text-gray-900 hover:text-gray-600">
+            <Link
+            href={`http://to/${props.to_path}`}
+            target="_blank"
+            className="flex-shrink truncate text-xl font-semibold text-gray-900 hover:text-gray-600">
               {`to/${props.to_path}`}
-            </h3>
+            </Link>
             <div className="flex items-center">
               <p className="text-sm text-gray-500">
                 {dayjs(props.created_at).fromNow()}
