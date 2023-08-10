@@ -4,7 +4,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
 import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa, ThemeMinimal } from "@supabase/auth-ui-shared";
+import { ThemeSupa } from "@supabase/auth-ui-shared";
 
 const AuthPage: NextPage = () => {
   const supabaseClient = useSupabaseClient();
@@ -57,13 +57,14 @@ const AuthPage: NextPage = () => {
           </h2>
         </div>
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="px-4 py-8 shadow sm:rounded-lg sm:px-10">
+          <div className="px-4 py-8 shadow sm:rounded-lg sm:px-10 bg-white border border-gray-200">
             <Auth
               supabaseClient={supabaseClient}
               providers={[
                 "github"
               ]}
               view="magic_link"
+              appearance={{ theme: ThemeSupa}}
               showLinks={false}
             />
           </div>

@@ -17,7 +17,7 @@ export default async function handler(
     if (!ids || ids.length === 0) {
       return res.json({
         "CODE": "EMPTY_COLLECTION",
-        "redirect": `/dashboard/collections?to=${path}`,
+        "redirect": `/dashboard/not-found/${path}`,
       });
     }
     
@@ -34,7 +34,7 @@ export default async function handler(
     if (link.length === 0) {
       return res.json({
         "CODE": "NOT_FOUND",
-        "redirect": `/dashboard/collections?to=${path}`,
+        "redirect": `/dashboard/not-found/${path}`,
       });
     }
 
