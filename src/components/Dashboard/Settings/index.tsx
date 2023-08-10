@@ -11,11 +11,15 @@ export default function DashboardSettingsBody() {
     <>
       {status === "loading" && <Skeleton active />}
       {status === "success" && (
-        <div className="divide-ylg:col-span-9 border border-gray-200 rounded-lg">
+        <div className="space-y-5">
+          <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+            Chrome Extension
+          </h2>
+          <div  className="divide-ylg:col-span-9 border border-gray-200 rounded-lg">
           <div className="px-4 py-6 sm:p-6 lg:pb-8">
             <div>
               <h2 className="text-lg font-medium leading-6 text-gray-900">
-                Chrom Extension
+                Access Token
               </h2>
               <p className="mt-1 text-sm text-gray-500">
                 Copy the following code and paste it into the extension.
@@ -53,6 +57,47 @@ export default function DashboardSettingsBody() {
                   </span>
                 </div>
               </div>
+            </div>
+            </div>
+            
+          </div>
+          <div className="border mt-6 border-gray-200 bg-white sm:rounded-lg">
+            <div className="px-4 py-5 sm:p-6">
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                Download Extension
+              </h3>
+                <>
+                  <div className="mt-2 max-w-2xl text-sm text-gray-500">
+                    <p>
+                      Download the extension from the following link and install it in your browser. Currently, the extension is only available for Chromium-based browsers.
+                    </p>
+                  </div>
+                  <div className="mt-5">
+                  <a
+                    href="https://chrome.google.com/webstore/detail/way-to-website/mbibpfdeokaolhaodpbopgfbjonmmhoe?hl=en&authuser=2"
+                    target="_blank"
+                    className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="-ml-0.5 mr-2 h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <circle cx="12" cy="12" r="4"></circle>
+                      <path d="M21.17 8L12 8"></path>
+                      <path d="M3.95 6.06L8.54 14"></path>
+                      <path d="M10.88 21.94L15.46 14"></path>
+                    </svg>
+                    Install Now
+                  </a>
+                  </div>
+                </>
             </div>
           </div>
         </div>

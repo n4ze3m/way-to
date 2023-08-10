@@ -1,5 +1,4 @@
 import {
-  ArrowPathIcon,
   GlobeAltIcon,
   LinkIcon,
   LockClosedIcon
