@@ -20,7 +20,7 @@ const AuthPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Get Started / Page Assist</title>
+        <title>Get Started / Way TO Website </title>
       </Head>
       <div className="relative isolate flex min-h-full flex-col justify-center overflow-hidden bg-white py-12 sm:px-6 lg:px-8">
         <svg
