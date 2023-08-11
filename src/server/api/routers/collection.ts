@@ -440,4 +440,60 @@ export const collectionRouter = createTRPCRouter({
 
       return "Collection deleted";
     }),
+
+  leaveCollection: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const user = ctx.user;
+      const prisma = ctx.prisma;
+
+      if (!user) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+        });
+      }
+
+      const collection = await getUserCollection(prisma, user.id, input.id);
+
+      if (!collection) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Collection not found",
+        });
+      }
+
+      if (collection.admin_user_id === user.id) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "You are the admin of this collection. You can't leave it",
+        });
+      }
+
+
+      const isUserInCollection = await prisma.collectionUser.findFirst({
+        where: {
+          collection_id: collection.id,
+          user_id: user.id,
+        }
+      });
+
+      if (!isUserInCollection) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "You are not a member of this collection",
+        });
+      }
+
+      await prisma.collectionUser.delete({
+        where: {
+          id: isUserInCollection.id,
+        },
+      });
+
+      return "You have left the collection";
+    }),
 });

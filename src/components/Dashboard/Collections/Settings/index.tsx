@@ -52,6 +52,21 @@ export default function SettingsBody() {
       },
     });
 
+  const { mutate: leaveCollection, isLoading: isLeaving } =
+    api.collection.leaveCollection.useMutation({
+      onSuccess: (data) => {
+        client.collection.getCollection.invalidate();
+        router.push("/dashboard");
+        notification.success({
+          message: data,
+        });
+      },
+      onError: (error) => {
+        notification.error({
+          message: error?.message || "Error Leaving collection",
+        });
+      },
+    });
   const [form] = Form.useForm();
   return (
     <div className="px-4 sm:px-6 lg:px-8">
@@ -66,6 +81,7 @@ export default function SettingsBody() {
         <div className="space-y-3">
           <Form
             form={form}
+            hidden={!data.is_owner}
             disabled={!data.is_owner}
             initialValues={{
               name: data.name,
@@ -132,55 +148,77 @@ export default function SettingsBody() {
             </div>
           </Form>
 
-          <div className="border  border-gray-200 bg-white sm:rounded-lg">
-            <div className="px-4 py-5 sm:p-6">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">
-                Delete your Collection
-              </h3>
-              {data.is_owner ? (
-                <>
-                  <div className="mt-2 max-w-xl text-sm text-red-500">
-                    <p>
-                      This action cannot be undone. This will permanently delete
-                      your collection.
-                    </p>
-                  </div>
-                  <div className="mt-5">
-                    <button
-                      type="button"
-                      disabled={isDeleting}
-                      onClick={() => {
-                        if (
-                          confirm(
-                            "Are you sure you want to delete this collection?"
-                          )
-                        ) {
-                          deleteCollection({
-                            id: slug,
-                          });
-                        }
-                      }}
-                      className="inline-flex items-center justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:text-sm"
-                    >
-                      {isDeleting ? "Deleting..." : "Delete"}
-                    </button>
-                  </div>
-                </>
-              ) : (
+          {data.is_owner ? (
+            <div className="border  border-gray-200 bg-white sm:rounded-lg">
+              <div className="px-4 py-5 sm:p-6">
+                <h3 className="text-lg font-medium leading-6 text-gray-900">
+                  Delete your Collection
+                </h3>
+
                 <div className="mt-2 max-w-xl text-sm text-red-500">
                   <p>
-                    You are not the owner of this collection. Only the owner can
-                    delete this collection.
-                  </p>
-
-                  <p>
-                    If you want to delete this collection, please contact the
-                    owner of this collection.
+                    This action cannot be undone. This will permanently delete
+                    your collection.
                   </p>
                 </div>
-              )}
+                <div className="mt-5">
+                  <button
+                    type="button"
+                    disabled={isDeleting}
+                    onClick={() => {
+                      if (
+                        confirm(
+                          "Are you sure you want to delete this collection?"
+                        )
+                      ) {
+                        deleteCollection({
+                          id: slug,
+                        });
+                      }
+                    }}
+                    className="inline-flex items-center justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:text-sm"
+                  >
+                    {isDeleting ? "Deleting..." : "Delete"}
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="border  border-gray-200 bg-white sm:rounded-lg">
+              <div className="px-4 py-5 sm:p-6">
+                <h3 className="text-lg font-medium leading-6 text-gray-900">
+                  Leave Collection
+                </h3>
+
+                <div className="mt-2 max-w-xl text-sm text-red-500">
+                  <p>
+                    This action cannot be undone. You will no longer be able to
+                    access this collection.
+                  </p>
+                </div>
+                <div className="mt-5">
+                  <button
+                    type="button"
+                    disabled={isLeaving}
+                    onClick={() => {
+                      if (
+                        confirm(
+                          "Are you sure you want to leave this collection?"
+                        )
+                      ) {
+                        leaveCollection({
+                          id: slug,
+                        });
+                      }
+                    }}
+                    className="inline-flex items-center justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:text-sm"
+                  >
+                    {isLeaving ? "Leaving..." : "Leave"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
       {status === "loading" && <Skeleton active />}

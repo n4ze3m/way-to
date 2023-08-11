@@ -29,14 +29,10 @@ export default function DashboardEmpty() {
             Create a collection to get started with the Way To Website.
           </p>
           <div className="mt-6">
-            <button
-              onClick={() => {
-                router.push(
-                  "https://chrome.google.com/webstore/detail/page-assist/ehkjdalbpmmaddcfdilplgknkgepeakd?hl=en&authuser=2"
-                );
-              }}
-              type="button"
-              className="inline-flex items-center rounded-md border border-black border-transparent bg-black px-5 py-2 text-sm  font-medium text-white transition-all duration-75 hover:bg-white focus:outline-none  active:scale-95 hover:text-black"
+            <a
+              href="https://chrome.google.com/webstore/detail/way-to-website/mbibpfdeokaolhaodpbopgfbjonmmhoe?hl=en&authuser=2"
+              target="_blank"
+              className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +52,7 @@ export default function DashboardEmpty() {
                 <path d="M10.88 21.94L15.46 14"></path>
               </svg>
               Install Extension
-            </button>
+            </a>
           </div>
         </div>
       </div>
